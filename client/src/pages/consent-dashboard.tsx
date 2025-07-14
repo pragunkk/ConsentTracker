@@ -14,14 +14,16 @@ export default function ConsentDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [dateFilter, setDateFilter] = useState("30");
+  const [dateFilter, setDateFilter] = useState("all");
   
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: records = [], isLoading } = useQuery<ConsentRecord[]>({
+  const { data: records = [], isLoading, error } = useQuery<ConsentRecord[]>({
     queryKey: ["/api/consent-records"],
   });
+
+
 
   const revokeAccessMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -120,7 +122,7 @@ export default function ConsentDashboard() {
   const handleClearFilters = () => {
     setSearchQuery("");
     setStatusFilter("all");
-    setDateFilter("30");
+    setDateFilter("all");
   };
 
   const handleExport = () => {

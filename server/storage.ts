@@ -329,6 +329,10 @@ export class MemStorage implements IStorage {
       status: record.status || "active",
       hostUserId: record.hostUserId || 1,
       guestUserId: record.guestUserId || 2,
+      accessLevel: record.accessLevel || "read",
+      purpose: record.purpose || "",
+      documentSize: record.documentSize || "",
+      documentType: record.documentType || "",
       createdAt: new Date(),
     };
     this.consentRecords.set(id, newRecord);
