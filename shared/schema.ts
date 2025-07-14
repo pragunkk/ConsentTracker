@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, varchar, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -12,9 +12,9 @@ export const consentRecords = pgTable("consent_records", {
   id: serial("id").primaryKey(),
   documentName: text("document_name").notNull(),
   dataAccessed: text("data_accessed").notNull(),
-  hostUserId: serial("host_user_id").references(() => users.id),
+  hostUserId: integer("host_user_id").notNull().references(() => users.id),
   hostUserName: text("host_user_name").notNull(),
-  guestUserId: serial("guest_user_id").references(() => users.id),
+  guestUserId: integer("guest_user_id").notNull().references(() => users.id),
   guestUserName: text("guest_user_name").notNull(),
   accessDate: timestamp("access_date").notNull(),
   expiryDate: timestamp("expiry_date").notNull(),
