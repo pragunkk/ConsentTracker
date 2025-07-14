@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ConsentRecord } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
@@ -12,7 +12,6 @@ import { Shield, Bell, User } from "lucide-react";
 export default function ConsentDashboard() {
   const [selectedRecord, setSelectedRecord] = useState<ConsentRecord | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filteredRecords, setFilteredRecords] = useState<ConsentRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("30");
@@ -73,7 +72,7 @@ export default function ConsentDashboard() {
   });
 
   // Filter records based on search and filters
-  useEffect(() => {
+  const filteredRecords = useMemo(() => {
     let filtered = records;
 
     // Apply search filter
@@ -102,7 +101,7 @@ export default function ConsentDashboard() {
       );
     }
 
-    setFilteredRecords(filtered);
+    return filtered;
   }, [records, searchQuery, statusFilter, dateFilter]);
 
   const handleViewDetails = (record: ConsentRecord) => {
